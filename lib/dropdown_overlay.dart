@@ -17,6 +17,7 @@ class _DropdownOverlay extends StatefulWidget {
   final bool? canCloseOutsideBounds;
   final ValueChanged<int>? onChangedIndex;
   final GlobalKey stickyKey;
+  final Decoration? decoration;
 
   const _DropdownOverlay({
     Key? key,
@@ -32,6 +33,7 @@ class _DropdownOverlay extends StatefulWidget {
     this.excludeSelected,
     this.canCloseOutsideBounds,
     this.onChangedIndex,
+    this.decoration,
   }) : super(key: key);
 
   @override
@@ -108,9 +110,9 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
               setState(() => displayOverly = false);
             },
           )
-        : SizedBox(
+        : const SizedBox(
             height: 48,
-            child: const Center(
+            child: Center(
               child: Text(
                 'Данные для выбора отсутствуют',
                 style: TextStyle(fontSize: 16),
@@ -132,17 +134,18 @@ class _DropdownOverlayState extends State<_DropdownOverlay> {
               key: key1,
               padding: _overlayOuterPadding,
               child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: borderRadius,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 24.0,
-                      color: Colors.black.withOpacity(.08),
-                      offset: _overlayShadowOffset,
+                decoration: widget.decoration ??
+                    BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: borderRadius,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 24.0,
+                          color: Colors.black.withOpacity(.08),
+                          offset: _overlayShadowOffset,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
                 child: Material(
                   color: Colors.transparent,
                   child: AnimatedSection(
